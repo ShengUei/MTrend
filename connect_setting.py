@@ -12,3 +12,4 @@ conn_setting = "host={0} port={1} user={2} dbname={3} password={4} sslmode={5}".
 def get_conn_setting():
     return conn_setting
 
+
