@@ -24,5 +24,6 @@ if conn is not None:
     
     # conn.commit()
     conn.close()
+    
 else:
     print("conn failure")
