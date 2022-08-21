@@ -1,11 +1,12 @@
 from flask import Flask
+from flask import render_template
 from webCrawler.foreign_exchange_rate import get_daily_rate
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.get("/")
+def index():
+    return render_template('index.html')
 
 @app.get('/DailyExchangeRate')
 def get_daily_exchange_rate():
