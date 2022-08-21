@@ -3,35 +3,29 @@ from bs4 import BeautifulSoup
 
 from model.Currency import Currency
 
-URL = 'https://rate.bot.com.tw/xrt?Lang=en-US'
+def get_daily_rate():
+    URL = 'https://rate.bot.com.tw/xrt?Lang=en-US'
 
-res = requests.get(URL)
+    res = requests.get(URL)
 
-soup = BeautifulSoup(res.text, 'html.parser')
+    soup = BeautifulSoup(res.text, 'html.parser')
 
-quoted_date = soup.find('span', class_='time').get_text().strip()
+    quoted_date = soup.find('span', class_='time').get_text().strip()
 
-data_set = soup.find('tbody').find_all('tr')
+    data_set = soup.find('tbody').find_all('tr')
 
-list = []
+    list = []
 
-for data in data_set:
+    for data in data_set:
+        currency_object = Currency()
 
-    object = Currency()
+        currency_object.quoted_date = quoted_date
+        currency_object.currency = data.find('div', class_='visible-phone print_hide').get_text().strip()
+        currency_object.cash_buying = data.find(attrs={"data-table" : "Cash Buying"}).get_text().strip()
+        currency_object.cash_selling = data.find(attrs={"data-table" : "Cash Selling"}).get_text().strip()
+        currency_object.spot_buying = data.find(attrs={"data-table" : "Spot Buying"}).get_text().strip()
+        currency_object.spot_selling = data.find(attrs={"data-table" : "Spot Selling"}).get_text().strip()
 
-    object.quoted_date = quoted_date
-    object.currency = data.find('div', class_='visible-phone print_hide').get_text().strip()
-    object.cash_buying = data.find(attrs={"data-table" : "Cash Buying"}).get_text().strip()
-    object.cash_selling = data.find(attrs={"data-table" : "Cash Selling"}).get_text().strip()
-    object.spot_buying = data.find(attrs={"data-table" : "Spot Buying"}).get_text().strip()
-    object.spot_selling = data.find(attrs={"data-table" : "Spot Selling"}).get_text().strip()
-
-    list.append(object)
-
-for data in list:
-    print(data.quoted_date)
-    print(data.currency)
-    print(data.cash_buying)
-    print(data.cash_selling)
-    print(data.spot_buying)
-    print(data.spot_selling)
+        list.append(currency_object)
+    
+    return list
