@@ -2,11 +2,20 @@
 
 class Currency():
     def __init__(self):
+        self.__quoted_date = ''
         self.__currency = ''
         self.__cash_buying = 0
         self.__cash_selling = 0
         self.__spot_buying = 0
         self.__spot_selling = 0
+
+    @property
+    def quoted_date(self):
+        return self.__quoted_date
+
+    @quoted_date.setter
+    def quoted_date(self, input_quoted_date):
+        self.__quoted_date = input_quoted_date
 
     @property
     def currency(self):
