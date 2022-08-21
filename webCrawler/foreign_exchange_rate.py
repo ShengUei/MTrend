@@ -1,11 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
-from Currency import Currency
+from model.Currency import Currency
 
-url = 'https://rate.bot.com.tw/xrt?Lang=en-US'
+URL = 'https://rate.bot.com.tw/xrt?Lang=en-US'
 
-res = requests.get(url)
+res = requests.get(URL)
 
 soup = BeautifulSoup(res.text, 'html.parser')
 

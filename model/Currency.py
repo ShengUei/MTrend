@@ -1,5 +1,4 @@
 
-
 class Currency():
     def __init__(self):
         self.__quoted_date = ''
