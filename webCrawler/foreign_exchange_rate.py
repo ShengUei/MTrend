@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-import datetime
+from datetime import datetime
 
 from model.Currency import Currency
 
@@ -14,9 +14,7 @@ def get_daily_rate():
 
     quoted_date_str = soup.find('span', class_='time').get_text().strip()
     
-    quoted_date = datetime.strftime(quoted_date_str, '%Y/%m/%d %H:%m')
-    
-    quoted_date.timezone = 'Asia/Taipei'
+    quoted_date = datetime.strptime(quoted_date_str, '%Y/%m/%d %H:%M')
 
     data_set = soup.find('tbody').find_all('tr')
 
