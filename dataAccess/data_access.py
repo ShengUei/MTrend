@@ -51,6 +51,7 @@ def insert_all_exchange_rate(input_object_list):
 
     else:
         conn.commit()
+        print("Insert Success")
 
     finally:
         conn.close()
