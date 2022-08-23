@@ -1,8 +1,9 @@
+import { LineChart } from "./D3/Lines/lineChart.js";
 
 //建立 <table></table>
 //@input: input_json 物件陣列
 //@input: renderTarget 要建立的 element 位子
-function render_table(input_json, renderTarget) {
+export function render_table(input_json, renderTarget) {
     //先清空 renderTarget 的內容
     renderTarget.innerHTML = "";
 
@@ -42,4 +43,11 @@ function render_table(input_json, renderTarget) {
     table.appendChild(tbody);
     docFrag.appendChild(table);
     renderTarget.appendChild(docFrag);
+}
+
+export function render_Line_Chart(input_json, setting, renderTarget) {
+
+    let chart = LineChart(input_json, setting)
+
+    renderTarget.appendChild(chart);
 }
