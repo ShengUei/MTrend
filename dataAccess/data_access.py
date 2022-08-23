@@ -1,29 +1,56 @@
 # Note: the module name is psycopg, not psycopg3
 import psycopg
-from setting.connect_setting import get_conn_setting
+from dataAccess.connection import openConnection
 
-# Connect to an existing database
-# def getConnection():
-#     conn = psycopg.connect(conn_str)
-#     return conn
+def get_all_exchange_rate():
+    conn = openConnection()
 
-conn = psycopg.connect(get_conn_setting())
+    try:
+        list = conn.execute("""
+                            SELECT * 
+                            FROM foreign_exchange_rate
+                            """).fetchall()
 
-if conn is not None:
-    print("conn success")
-    # cur = conn.cursor()
-    # cur.execute("INSERT INTO foreign_exchange_rate (quoted_date, currency, cash_buy, cash_sell, spot_buy, spot_sell) \
-    #             VALUES (%s, %s, %s, %s, %s, %s)", 
-    #             ("2022/08/14 09:25", "JPY", "0.2154", "0.2282", "0.2222", "0.2272"))
+    except BaseException:
+        conn.rollback()
+        print("BaseException")
 
-    # record = cur.execute("Select * From foreign_exchange_rate").fetchall()
-    record = conn.execute("Select * From foreign_exchange_rate").fetchall()
+    else:
+        conn.commit()
 
-    for data in record:
-        print(data)
+    finally:
+        conn.close()
+
+    return list
+
+def insert_all_exchange_rate(input_object_list):
+    conn = openConnection()
     
-    # conn.commit()
-    conn.close()
-    
-else:
-    print("conn failure")
+    try:
+        # cur = conn.cursor()
+        # with cur.copy("COPY foreign_exchange_rate (quoted_date, currency, cash_buy, cash_sell, spot_buy, spot_sell) FROM STDIN") as copy:
+            # for object in input_object_list:
+            #     copy.write_row(object)
+        for object in input_object_list:
+            conn.execute("""
+                        INSERT INTO 
+                        foreign_exchange_rate (quoted_date, currency, cash_buy, cash_sell, spot_buy, spot_sell)
+                        VALUES (%(quoted_date)s, %(currency)s, %(cash_buy)s, %(cash_sell)s, %(spot_buy)s, %(spot_sell)s);
+                        """,
+                        {'quoted_date' : object.quoted_date, 
+                        'currency' : object.currency, 
+                        'cash_buy' : object.cash_buying,
+                        'cash_sell' : object.cash_selling,
+                        'spot_buy' : object.spot_buying,
+                        'spot_sell' : object.spot_selling})
+
+    except BaseException  as e:
+        conn.rollback()
+        print("BaseException")
+        print(e)
+
+    else:
+        conn.commit()
+
+    finally:
+        conn.close()
