@@ -31,7 +31,10 @@ class Currency():
 
     @cash_buying.setter
     def cash_buying(self, input_cash_buying):
-        self.__cash_buying = input_cash_buying
+        if input_cash_buying == '-':
+            self.__cash_buying = 0
+        else:
+            self.__cash_buying = input_cash_buying
 
     @property
     def cash_selling(self):
@@ -39,7 +42,10 @@ class Currency():
 
     @cash_selling.setter
     def cash_selling(self, input_cash_selling):
-        self.__cash_selling = input_cash_selling
+        if input_cash_selling == '-':
+            self.__cash_selling = 0
+        else:
+            self.__cash_selling = input_cash_selling
 
     @property
     def spot_buying(self):
@@ -47,7 +53,10 @@ class Currency():
 
     @spot_buying.setter
     def spot_buying(self, input_spot_buying):
-        self.__spot_buying = input_spot_buying
+        if input_spot_buying == '-':
+            self.__spot_buying = 0
+        else:
+            self.__spot_buying = input_spot_buying
 
     @property
     def spot_selling(self):
@@ -55,4 +64,7 @@ class Currency():
 
     @spot_selling.setter
     def spot_selling(self, input_spot_selling):
-        self.__spot_selling = input_spot_selling
+        if input_spot_selling == '-':
+            input_spot_selling = 0
+        else:
+            self.__spot_selling = input_spot_selling
