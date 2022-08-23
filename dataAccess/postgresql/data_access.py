@@ -1,6 +1,6 @@
 # Note: the module name is psycopg, not psycopg3
 import psycopg
-from dataAccess.connection import openConnection
+from dataAccess.postgresql.connection import openConnection
 
 def get_all_exchange_rate():
     conn = openConnection()
@@ -27,10 +27,6 @@ def insert_all_exchange_rate(input_object_list):
     conn = openConnection()
     
     try:
-        # cur = conn.cursor()
-        # with cur.copy("COPY foreign_exchange_rate (quoted_date, currency, cash_buy, cash_sell, spot_buy, spot_sell) FROM STDIN") as copy:
-            # for object in input_object_list:
-            #     copy.write_row(object)
         for object in input_object_list:
             conn.execute("""
                         INSERT INTO 

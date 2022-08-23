@@ -1,4 +1,4 @@
-import { LineChart } from "./D3/Lines/lineChart.js";
+import { LineChart } from "./D3/lines/lineChart.js";
 
 //建立 <table></table>
 //@input: input_json 物件陣列
