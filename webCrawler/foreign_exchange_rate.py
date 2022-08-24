@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from model.Currency import Currency
 
@@ -11,10 +11,9 @@ def get_daily_rate():
     res = requests.get(URL)
 
     soup = BeautifulSoup(res.text, 'html.parser')
-
-    quoted_date_str = soup.find('span', class_='time').get_text().strip()
     
-    quoted_date = datetime.strptime(quoted_date_str, '%Y/%m/%d %H:%M')
+    #抓取本機時間(UTC)
+    quoted_date = datetime.now(timezone.utc)
 
     data_set = soup.find('tbody').find_all('tr')
 
