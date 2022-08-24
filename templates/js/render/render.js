@@ -46,6 +46,8 @@ export function render_table(input_json, renderTarget) {
 }
 
 export function render_Line_Chart(input_json, setting, renderTarget) {
+    //先清空 renderTarget 的內容
+    renderTarget.innerHTML = "";
 
     let chart = LineChart(input_json, setting)
 
