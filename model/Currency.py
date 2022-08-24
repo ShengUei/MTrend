@@ -1,7 +1,8 @@
+from datetime import datetime
 
 class Currency():
     def __init__(self):
-        self.__quoted_date = ''
+        self.__quoted_date = None # datetime object
         self.__currency = ''
         self.__cash_buying = 0
         self.__cash_selling = 0
