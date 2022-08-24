@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
@@ -15,31 +16,8 @@
 
     </div>
 
-    <script>
-        obj1 = {
-            "currency": "USA",
-            "cash_buying": 30.5,
-            "cash_selling": 29.5,
-            "spot_buying": 30,
-            "spot_selling": 29
-        }
-
-        obj2 = {
-            "currency": "JP",
-            "cash_buying": 3,
-            "cash_selling": 2,
-            "spot_buying": 3,
-            "spot_selling": 2
-        }
-
-        const renderTarget = document.querySelector(".content");
-        input_json = [obj1, obj2]
-
-        document.querySelector("#test-click").onclick = () => {
-            render_table(input_json, document.querySelector(".content"));
-        }
-    </script>
-    <script src="render.js"></script>
+    <script type="module" src="/js/action.js"></script>
+    
 </body>
 
 </html>
