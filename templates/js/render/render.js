@@ -1,5 +1,6 @@
 import { LineChart } from "/js/D3/lines/lineChart.js";
 import { MutipleLineChart } from "/js/D3/lines/mutipleLineChart.js";
+import { CandlestickChart } from "/js/D3/lines/candlestickChart.js";
 
 //建立 <table></table>
 //@input: input_json 物件陣列
@@ -60,6 +61,15 @@ export function render_Mutiple_Line_Chart(input_json, setting, renderTarget) {
     renderTarget.innerHTML = "";
 
     let chart = MutipleLineChart(input_json, setting)
+
+    renderTarget.appendChild(chart);
+}
+
+export function render_Candlestick_Chart(input_json, setting, renderTarget) {
+    //先清空 renderTarget 的內容
+    renderTarget.innerHTML = "";
+
+    let chart = CandlestickChart(input_json, setting)
 
     renderTarget.appendChild(chart);
 }
