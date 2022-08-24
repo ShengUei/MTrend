@@ -13,7 +13,7 @@ def get_daily_rate():
     soup = BeautifulSoup(res.text, 'html.parser')
     
     #抓取本機時間(UTC)
-    quoted_date = datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc)
 
     data_set = soup.find('tbody').find_all('tr')
 
@@ -22,7 +22,7 @@ def get_daily_rate():
     for data in data_set:
         currency_object = Currency()
 
-        currency_object.quoted_date = quoted_date
+        currency_object.quoted_date = now
         currency_object.currency = data.find('div', class_='visible-phone print_hide').get_text().strip()
 
         cash_buying = data.find(attrs={"data-table" : "Cash Buying"}).get_text().strip()
