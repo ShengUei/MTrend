@@ -1,6 +1,7 @@
 # Note: the module name is psycopg, not psycopg3
 import psycopg
 from dataAccess.postgresql.connection import openConnection
+from logging.logging import get_logger
 
 def get_all_exchange_rate():
     conn = openConnection()
@@ -24,6 +25,8 @@ def get_all_exchange_rate():
     return list
 
 def insert_all_exchange_rate(input_object_list):
+    logger = get_logger()
+    
     conn = openConnection()
     
     try:
@@ -40,14 +43,15 @@ def insert_all_exchange_rate(input_object_list):
                         'spot_buy' : object.spot_buying,
                         'spot_sell' : object.spot_selling})
 
-    except BaseException  as e:
+    except BaseException as e:
         conn.rollback()
-        print("BaseException")
-        print(e)
+        print("BaseException : %s", e)
+        logger.error(e)
 
     else:
         conn.commit()
-        print("Insert Success")
-
+        print("All Currency Exchange Rate Insert Success")
+        logger.info("All Currency Exchange Rate Insert Success")
+        
     finally:
         conn.close()
