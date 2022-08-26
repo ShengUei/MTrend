@@ -1,9 +1,32 @@
-# Note: the module name is psycopg, not psycopg3
-import psycopg
 from dataAccess.postgresql.connection import openConnection
-from logging.logging import get_logger
+from logger.logger import get_logger
+
+# def get_quoted_date():
+#     conn = openConnection()
+
+#     try:
+#         list = conn.execute("""
+#                             SELECT quoted_date 
+#                             FROM foreign_exchange_rate
+#                             """).fetchall()
+
+#     except BaseException as e:
+#         conn.rollback()
+#         print("BaseException : %s", e)
+#         logger.error("BaseException : %s", e)
+
+#     else:
+#         conn.commit()
+#         logger.info("Get Quoted Date Success")
+
+#     finally:
+#         conn.close()
+
+#     return list
 
 def get_all_exchange_rate():
+    logger = get_logger()
+
     conn = openConnection()
 
     try:
@@ -12,12 +35,14 @@ def get_all_exchange_rate():
                             FROM foreign_exchange_rate
                             """).fetchall()
 
-    except BaseException:
+    except BaseException as e:
         conn.rollback()
-        print("BaseException")
+        print("BaseException : %s", e)
+        logger.error("BaseException : %s", e)
 
     else:
         conn.commit()
+        logger.info("Get All Exchange Rate Success")
 
     finally:
         conn.close()
@@ -26,7 +51,7 @@ def get_all_exchange_rate():
 
 def insert_all_exchange_rate(input_object_list):
     logger = get_logger()
-    
+
     conn = openConnection()
     
     try:

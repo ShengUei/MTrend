@@ -1,17 +1,10 @@
-# from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
+from jobs.jobs import get_and_save_exchange_rate
 
-def job():
-    print("No is: %s" % datetime.now())
+scheduler = BackgroundScheduler()
 
-# scheduler = BackgroundScheduler()
-scheduler = BlockingScheduler()
-
-print("start : %s" % datetime.now())
-
-# 每一分鐘會去執行 job function
-scheduler.add_job(job, 'interval', seconds = 5)
+#每週一 ~ 五 18:00 ，由網路抓匯率與存匯率至DB
+scheduler.add_job(get_and_save_exchange_rate, 'cron', day_of_week = '1-5', hour = 18)
 
 scheduler.start()
 
