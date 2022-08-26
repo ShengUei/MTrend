@@ -12,7 +12,7 @@ error_log_folder = 'error_log/'
 #設定檔名
 filename = "{:%Y-%m-%d}".format(datetime.now(timezone.utc) + '.log'
  
-def create_logger():
+def get_logger():
                                 
     #檢查目錄是否存在
     check_or_create_folder(info_log_folder)
