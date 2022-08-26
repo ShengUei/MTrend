@@ -3,7 +3,7 @@ import logging
 import os
  
 #設定 logs 目錄
-dir_path = 'D:/pythonProject/itkm/logger/logs/'
+dir_path = './logger/logs/'
 
 #設定 log 資料夾
 info_log_folder = 'info_log/'
@@ -36,8 +36,8 @@ def get_logger():
  
     #console handler
     consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.ERROR)
     consoleHandler.setFormatter(formatter)
+    consoleHandler.setLevel(logging.ERROR)
     logger.addHandler(consoleHandler)
  
     return logger
