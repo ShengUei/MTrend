@@ -13,17 +13,26 @@ error_log_folder = 'error_log/'
 filename = "{:%Y-%m-%d}".format(datetime.now(timezone.utc) + '.log'
  
 def create_logger():
+    #檢查目錄是否存在
+    check_or_create_folder(info_log_folder)
+    check_or_create_folder(error_log_folder)
+                                
     #log config
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
     
-    # error file handler
-    fileHandler = logging.FileHandler(dir_path + error_log_folder + '/' + filename, 'a', 'utf-8')
-    fileHandler.setFormatter(formatter)
+    #info file handler
+    infoFileHandler = logging.FileHandler(dir_path + info_log_folder + '/' + filename, 'a', 'utf-8')
+    infoFileHandler.setFormatter(formatter)
+    infoFileHandler.setLevel(logging.INFO)                          
+    logger.addHandler(infoFileHandler)   
+    
+    #error file handler
+    errorFileHandler = logging.FileHandler(dir_path + error_log_folder + '/' + filename, 'a', 'utf-8')
+    errorFileHandler.setFormatter(formatter)
     logger.addHandler(fileHandler)
  
-    # console handler
+    #console handler
     consoleHandler = logging.StreamHandler()
     consoleHandler.setLevel(logging.ERROR)
     consoleHandler.setFormatter(formatter)
@@ -33,6 +42,6 @@ def create_logger():
 
 def check_or_create_folder(log_folder):
   
-    # 如果目錄不存，則建新的
+    #如果目錄不存，則建新的
     if not os.path.exists(dir_path + log_folder):
         os.makedirs(dir_path + log_folder)
