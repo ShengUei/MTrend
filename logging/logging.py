@@ -4,6 +4,11 @@ import os
  
 #設定 logs 目錄
 dir_path = 'D:/pythonProject/itkm/logger/logs/'
+
+#設定 log 資料夾
+info_log_folder = 'info_log/'
+error_log_folder = 'error_log/'
+
 #設定檔名
 filename = "{:%Y-%m-%d}".format(datetime.now(timezone.utc) + '.log'
  
@@ -13,14 +18,14 @@ def create_logger():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     
-    # file handler
-    fileHandler = logging.FileHandler(dir_path + log_folder + '/' + filename, 'a', 'utf-8')
+    # error file handler
+    fileHandler = logging.FileHandler(dir_path + error_log_folder + '/' + filename, 'a', 'utf-8')
     fileHandler.setFormatter(formatter)
     logger.addHandler(fileHandler)
  
     # console handler
     consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.DEBUG)
+    consoleHandler.setLevel(logging.ERROR)
     consoleHandler.setFormatter(formatter)
     logger.addHandler(consoleHandler)
  
