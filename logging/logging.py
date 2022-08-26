@@ -13,12 +13,13 @@ error_log_folder = 'error_log/'
 filename = "{:%Y-%m-%d}".format(datetime.now(timezone.utc) + '.log'
  
 def create_logger():
+                                
     #檢查目錄是否存在
     check_or_create_folder(info_log_folder)
     check_or_create_folder(error_log_folder)
                                 
     #log config
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', '%Y/%m/%d %H:%M:%s %z')
     logger = logging.getLogger()
     
     #info file handler
@@ -30,7 +31,8 @@ def create_logger():
     #error file handler
     errorFileHandler = logging.FileHandler(dir_path + error_log_folder + '/' + filename, 'a', 'utf-8')
     errorFileHandler.setFormatter(formatter)
-    logger.addHandler(fileHandler)
+    errorFileHandler.setLevel(logging.ERROR)
+    logger.addHandler(errorFileHandler)
  
     #console handler
     consoleHandler = logging.StreamHandler()
