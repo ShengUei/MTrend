@@ -1,4 +1,3 @@
-from datetime import datetime
 
 class Currency():
     def __init__(self):
@@ -56,3 +55,4 @@ class Currency():
     @spot_selling.setter
     def spot_selling(self, input_spot_selling):
         self.__spot_selling = input_spot_selling
+    

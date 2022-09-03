@@ -45,7 +45,7 @@ def get_daily_rate():
 
     except Exception as e:
         print("Excetion $s", e)
-        logger.error("BaseException : %s", e)
+        logger.error("BaseException : %s" % e)
         return []
 
     else:

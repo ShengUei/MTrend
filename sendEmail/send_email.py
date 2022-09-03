@@ -39,8 +39,8 @@ def send_email(title, content):
             smtp.login(email_setting['sender'], email_setting['sender_password'])  
 
         except smtplib.SMTPException as e:
-            print("SMTPException message: ", e)
-            logger.error("BaseException : %s", e)
+            print("SMTPException message: %s" % e)
+            logger.error("BaseException : %s" % e)
 
         else:
             #寄送郵件
