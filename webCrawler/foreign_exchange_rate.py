@@ -2,9 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 
 from datetime import datetime, timezone
+import time
+import random
 
 from model.Currency import Currency
-from logger.logger import get_logger
+from logger.logger import get_logger, close_handler
 
 def get_daily_rate():
     URL = 'https://rate.bot.com.tw/xrt?Lang=en-US'
@@ -12,6 +14,9 @@ def get_daily_rate():
     logger = get_logger()
 
     try:
+        #先 sleep 幾秒，再開始 run
+        time.sleep(random.uniform(1.0, 60.0))
+
         res = requests.get(URL)
 
         soup = BeautifulSoup(res.text, 'html.parser')
@@ -44,14 +49,12 @@ def get_daily_rate():
             list.append(currency_object)
 
     except Exception as e:
-        print("Excetion $s", e)
-        logger.error("BaseException : %s" % e)
+        logger.error("BaseException : %s" % e, exc_info=True)
         return []
 
     else:
-        print("Get Daily Exchange Rate Success From web")
-        logger.info("Get Daily Exchange Rate Success From web")
         return list
     
     finally:
         res.close()
+        close_handler(logger)

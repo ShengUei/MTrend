@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 
 from util.request import get_request
-from logger.logger import get_logger
+from logger.logger import get_logger, close_handler
 
 def get_daily_trading_details():
+    logger = get_logger()
+
     try:
         utc_now = datetime.utcnow()
         local_datetime = utc_now + timedelta(hours = 8)
@@ -11,36 +13,27 @@ def get_daily_trading_details():
         date_str = local_datetime.strftime('%Y%m%d')
 
         HOST = 'www.twse.com.tw'
-        url = 'https://www.twse.com.tw/en/fund/T86?response=json&date={0}&selectType=ALL'.format(date_str)
+        selectType = ['ALL', 24] #24: 半導體業
+        url = 'https://www.twse.com.tw/en/fund/T86?response=json&date={0}&selectType={1}'.format(date_str, selectType[1])
         stat_code = {0: 'OK', 1: 'No Data!'}
-        
-        logger = get_logger()
 
         if(local_weekday > 5):
-            print('Today is holiday.')
-            logger.info('Today is holiday.')
             return {}
 
         res_dict = get_request(url, HOST)
 
         if not res_dict:
-            print('Get Data Failures From web.')
-            logger.error('Get Data Failures From web.')
             return {}
         
         if(res_dict['stat'] != stat_code[0]):
-            print('No data.')
-            logger.error('No data.')
             return {}
 
     except Exception as e:
         print("Excetion $s", e)
-        logger.error("Exception : %s" % e)
+        logger.error("Exception : %s" % e, exc_info=True)
         return {}
 
     else:
-        print("Get Daily Trading Details Success From web")
-        logger.info("Get Daily Trading Details Success From web")
         data_dict = {
             'current_datetime': utc_now,
             'data_list': res_dict['data']
@@ -48,6 +41,5 @@ def get_daily_trading_details():
         return data_dict
     
     finally:
-        print("Get Daily Trading Details Done")
-        logger.info("Get Daily Trading Details Done")
+        close_handler(logger)
 

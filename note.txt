@@ -1,7 +1,9 @@
 How to Run:
 
-1. pip install --upgrade pip
+1. python -m venv .venv
 
-2. pip install -r requirements.txt
+2. python -m pip install --upgrade pip
 
-3. python schedule.py &
+3. python -m pip install -r requirements.txt
+
+4. python schedule.py &
