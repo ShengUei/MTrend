@@ -14,7 +14,7 @@ def get_request(target_url, host):
         #先 sleep 幾秒，再開始 run
         time.sleep(random.uniform(1.0, 60.0))
 
-        logger = get_logger()
+        # logger = get_logger()
 
         res = requests.get(url = target_url,
                     headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9,application/json,text/javascript, */*; q=0.01", 
@@ -30,12 +30,12 @@ def get_request(target_url, host):
     
     except Exception as e:
         print("Excetion $s", e)
-        logger.error("BaseException : %s" % e)
+        # logger.error("BaseException : %s" % e)
         return {}
 
     else:
         print("Get Data Success From web")
-        logger.info("Get Data Success From web")
+        # logger.info("Get Data Success From web")
         return json.loads(res.text)
     
     finally:

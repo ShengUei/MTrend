@@ -73,15 +73,15 @@ def insert_all_exchange_rate(input_object_list):
     finally:
         conn.close()
 
-def insert_all_trading_details(data_dict):
+def insert_trading_details(data_dict: dict):
     try:
-        logger = get_logger()
+        # logger = get_logger()
 
         conn = openConnection()
         
         if(data_dict == None):
-            print("All Trading Details Insert Not Run")
-            logger.info("All Trading Details Insert Not Run")
+            print("Trading Details Insert Not Run")
+            # logger.info("All Trading Details Insert Not Run")
             return
 
         for data_row in data_dict['data_list']:
@@ -131,12 +131,12 @@ def insert_all_trading_details(data_dict):
     except BaseException as e:
         conn.rollback()
         print("BaseException : %s" % e)
-        logger.error("BaseException : %s" % e)
+        # logger.error("BaseException : %s" % e)
 
     else:
         conn.commit()
-        print("All Trading Details Insert Success")
-        logger.info("All Trading Details Insert Success")
+        print("Trading Details Insert Success")
+        # logger.info("All Trading Details Insert Success")
         
     finally:
         conn.close()
